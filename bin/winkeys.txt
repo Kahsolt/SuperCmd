@@ -1,0 +1,37 @@
+F2				重命名
+F4				资源管理器地址栏
+F6				浏览器地址栏
+F10				激活当前程序中的菜单条
+
+Alt + Esc 		切换当前程序
+Alt + D			资源管理器地址栏地址栏
+
+PrtScr			将当前屏幕以图象方式拷贝到剪贴板
+Alt + PrtScr	将当前活动程序窗口以图象方式拷贝到剪贴板
+
+Win + B 			将焦点放在通知区域上
+Win + Alt + D		显示日历
+Win + I				设置
+Win + J				将焦点设置到可用的 Windows 提示
+Win + U				快速访问
+Win + Shift + S		截图工具
+Win + T 			循环浏览任务栏上的应用
+Win + X				系统快捷菜单
+Win + 逗号(,) 		临时速览桌面
+Win +  Alt + 数字	打开桌面，然后打开固定到任务栏的应用的“跳转列表”
+
+Win + Ctrl + D 		添加虚拟桌面
+Win + Ctrl + F4 	关闭你正在使用的虚拟桌面
+
+
+[Cmd]
+Ctrl + Shift + +/-	改变透明度
+Ctrl + M			进入或退出「标记模式」
+Shift + Arrow		扩选
+F3					重复上一条命令
+F7					查看历史
+Alt + F7			清空历史
+F8					循环搜索前缀匹配的历史命令
+F9					按编号选择命令
+ALT + Enter			全屏
+Alt + PrtScr		截取屏幕上当前命令窗里的内容
