@@ -1,0 +1,178 @@
+命令格式：
+nmap [flag|swith|protocol] <target>
+
+协议(protocol)
+  ICMP  1
+  IGMP  2
+  TCP   6
+  UDP   17
+
+目标(target)
+  域名    scanme.nmap.org
+  ip地址  192.168.126.1
+  ip范围  192.168.126.1-200
+  ip段    192.168.126.1/24
+
+选项(flag|swith)
+0.快速起步
+  -A              综合扫描
+  -v              详细模式
+  -d <n>          设置调试级别，n=[1, 9]，最简略、最详细9
+  --interactive   启动交互模式
+  --send-eth      发送以太网数据包
+  --send-ip       在网络层发送
+  --privileged    假定nmap运行者有root权限
+  --iflist        列举接口和路由
+  -e              指定网卡接口
+  -oN <file>      保存为标准格式
+  -oX <file>      保存为XML
+  -oS <file>      保存为133t格式
+  -oG <file>      保存为grep格式
+  -oA             保存所有格式
+  --append-output 保存写入方式为追加，默认覆盖
+  --resume <file> 根据保存文件，从Ctrl+C中断处继续扫描
+  
+1.主机发现/存活测试
+  -P0 [protocol]  无Ping，强制探测，可穿透拦截Ping的防火墙
+  -sP             Ping；发送ICMP Echo和TCP，返回存活状态和MAC
+  -PS [port]      TCP SYNC Ping；发送带SYN的空TCP报文，期待SYNC/ACK报文
+  -PA [port]      TCP ACK Ping；发送带ACK的空TCP报文，期待RST报文
+  -PU [port]      UDP Ping；发送空UDP报文，期待ICMP端口不可达报文
+  -PY [port]      SCTP INIT Ping；发送SCTP INIT报文
+  -PR             ARP Ping；发送ARP请求(广播)
+  -PE;-PP;-PM     ICMP-Types Ping；发送ICMP回显/时间戳/地址掩码请求报文
+  
+  -6              扫描IPv6地址(指明目标是IPv6地址)
+  -sL             列出所要扫描的目标，默认启用-R以获取名字；不发送报文到目标
+  -R              启用DNS反向解析
+  -n              禁用DNS反向解析
+  --system-dns    使用系统自带的域名解析器，而非当前DHCP配置
+  --packet-trace  显示收发包
+  --trace-route   显示路由跟踪
+
+2.网络探索/端口状态
+
+  端口状态定义
+    open        端口开放
+    closed      端口关闭，或防火墙阻挡
+    filtered    端口不可访问；防火墙阻挡，或网络拥塞
+    unfiltered  端口可访问，但不能判断开闭状态
+    open|filtered     无法确定开放或过滤，防火墙不完全阻挡
+    closed|filtered   无法确定关闭或过滤
+
+  -sT             TCP连接扫描；发送SYNC，收到SYNC/ACK后发送ACK
+  -sS             TCP SYNC扫描/半开放扫描；发送SYNC，收到SYNC/ACK后发送RST
+  -sA             TCP ACK扫描；发送SYNC，期待RST
+  -sW             TCP窗口扫描；同-sA，但检查RST报文的window_size域是否为0
+  -sN;-sF;-sX     TCP隐蔽扫描，发送病态TCP包/FIN/Xmas(FIN+PSH+URG)报文，期待RST报文
+  -sM             TCP Maimon扫描；同-sN;-sF;-sX，但对于BSD系统则不期待响应(BSD会丢弃探针)
+  --scanflags URGACKPSHRSTSYNFIN   自定义探针TCP报文的标志位，使用不带空格的位名称组合即可
+  -sU             UDP扫描，很慢；发送空DUP报文
+  -sO             IP扫描，探查目标支持的IP上层协议号；发送空IP报文头
+  -sI <ip:port>   空闲扫描，指定一个僵尸主机作扫描的代理，例如(www.0day.co:455)
+  -b              FTP Bounce扫描，少用；需要连接到某FTP服务器，要求把某文件送往目标
+  
+  -T <level>      速度控制，level=[0, 5]，最慢0、最快5、默认3
+  -p [port]       指定端口，80/0-1024/T:80/U:53
+  -F              快速端口扫描
+  --top-ports     仅扫描100个常用端口，见nmap-services文件
+  --port-ratio <ratio>  仅扫描开放率大于ratio的端口，见nmap-services文件
+  -r              按顺序扫描端口，默认是随机顺序
+  
+3.指纹识别/服务探测
+  -sV             版本探测
+  --allports      全端口版本探测
+  --version-intensilty <intensilty> 指定探测强度，intensilty=[0, 9]，最弱0、最强9、默认7
+  --version-light 即intensilty=2
+  --version-all   即intensilty=9
+  --version-trace 显示版本信息跟踪
+  -sR             SunRPC探测
+  -O              操作系统探测
+  --osscan-limit  只对具有开闭端口的主机进行-O
+  --osccan-guess;--fuzzy  推测最可能的操作系统，如果-O不能确定
+
+4.优化扫描速度
+  --min-hostgroup <n>     并行扫描主机的数量
+  --host-timeout <n>      主机超时放弃
+  --min-parallelism <n>   全局并行发送探测报文的数量，通常大于1
+  --max-parallelism <n>   对同一主机并行发送探测报文的数量，通常为1
+  --min-rtt-timeout <n>   探测报文超时放弃，比如500ms
+  --max-rtt-timeout <n>
+  --initial-rtt-timeout <n>
+  --scan-delay <n>        探测报文时间间隔
+  --max-scan-delay <n>
+
+5.防火墙/IDS逃逸
+  --randomize-hosts   按随机顺序扫描主机列表，默认是顺序扫描
+  -f                  报文分段(报文头也打碎，8B或更小)
+  --mtu <n>           指定ICP/IP的最大传输单元mtu大小，n必须是8的倍数
+  --data-length       指定发包数据长度；会发送随机数据
+  
+  --spoof-mac <x>     MAX地址欺骗，指定MAC地址或厂商名字，若x为0则随机生成
+  -sI                 源地址欺骗，即代理扫描
+  -D <ip|RND:n>       IP欺骗，指定若干地址、或用RND随机生成、或用ME代表真实IP
+                      版本检测和TCP扫描时诱饵无效
+    e.g. -D 192.168.0.1,127.0.0.1 或 -D RND:10
+  -g;--source-port <port>  源端口欺骗，指定端口号
+
+6.脚本：信息搜集(作为--script的参数)
+  ip-geolocation-*      主机地理位置
+  histmap-ip2hosts      IP反查，绑定在该IP上的域名
+  membase-http-info     目标系统软硬件信息
+  firewalk --trace-route  探测防火墙过滤规则
+  
+  whois                 网站所有者信息
+  dns-brute --script-args dns-brute.domain=<domain> 子域名爆破
+  http-headers          HTTP报文头探测
+  http-sitemap-generator  网站目录结构探测
+  http-email-harvest    搜集网页上的email
+  http-stored-xss.nse   扫描XSS漏洞
+  http-sql-injection    扫描SQL注入漏洞
+  
+  ssl-enum-ciphers      枚举目标支持的SSL密钥和压缩算法
+  ssh-hostkey           查看SSH密钥信息
+  snmp-win32-services -sU -p161     通过snmp列举服务
+  snmp-win32-user -sU -p161         通过snmp列举账户
+  smb-security-mode.nse -p <port>   检查打印机漏洞
+  smb-check-vulns.nse -p <port>     检查SMB漏洞
+  vmauthd-brute -p902         爆破VMWare虚拟机上的用户账户
+
+7.脚本：数据库渗透(作为--script的参数)
+  mysql-brute                 爆破MySQL密码
+  mysql-empty-password        检查MySQL空密码
+  mysql-variables             列举MySQL变量
+  mysql-database --script-args mysqluser=root,mysqlpass -p3306  列举MySQL数据库名
+  ms-sql-brute --script-args userdb=user.txt,passdb=pass.txt -p1433
+  ms-sql-empty-password
+  ms-sql-tables
+  ms-sql-xp-cmdshell
+  
+8.脚本：网络服务审计
+  http-brute
+  http-wordpress-brute
+  http-joomla-brute
+  ftp-brute
+  pop3-brute
+  smb-brute.nse
+  vnc-brute
+  smtp-brute
+  stuxnet-detect      检查Stuxnet蠕虫
+  snmp-brute
+  snmp-netstat
+  snmp-processes
+  snmp-win32-services
+
+9.脚本：自定义NSE in Lua
+author = "Kahsolt"
+categories = {"test"}
+local comm = require "common"
+require "shortport"
+local http = require "http"
+portrule = function(host, port)
+  return port.number == 80 and port.state == "open"
+end
+action = function(host, port)
+  local uri = "/admin.php"
+  local resp = http.get(host, port, uri)
+  return resp and "Admin found!!" or "No admin."
+end

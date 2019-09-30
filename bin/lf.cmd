@@ -2,4 +2,4 @@
 @REM list directory by fullpath
 @ECHO OFF
 
-FOR /F %%f IN ('DIR /O:NG /T:W /B %1') DO echo %%~dpnxf
+FOR /F %%f IN ('DIR /O:NG /T:W /B %1') DO ECHO %%~ff

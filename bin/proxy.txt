@@ -1,0 +1,14 @@
+[v2ray]
+ip = 104.238.148.35
+port = 36156
+id = d1bf34b8-7493-488f-8675-60dc3db164e2
+
+ip = 198.23.214.13
+port = 3389
+id: e89a5abe-3681-4195-b847-fae601593eb6
+
+[shadowsocks]
+ip = 104.238.148.35
+port = 23333
+encrypt = chacha20
+passwd = johnsmith

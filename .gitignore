@@ -1,0 +1,6 @@
+# project meta
+.vscode
+
+# sensitive information :)
+bin/password*
+bin/hosts.txt

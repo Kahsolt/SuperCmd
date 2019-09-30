@@ -1,0 +1,36 @@
+主命令框
+
+F1 或 Ctrl+Shift+P: 打开命令面板。在打开的输入框内，可以输入任何命令，例如：
+
+    按一下 Backspace 会进入到 Ctrl+P 模式
+    在 Ctrl+P 下输入 > 可以进入 Ctrl+Shift+P 模式
+
+在 Ctrl+P 窗口下还可以:
+
+    直接输入文件名，跳转到文件
+    ? 列出当前可执行的动作
+    ! 显示 Errors或 Warnings，也可以 Ctrl+Shift+M
+    : 跳转到行数，也可以 Ctrl+G 直接进入
+    @ 跳转到 symbol（搜索变量或者函数），也可以 Ctrl+Shift+O 直接进入
+    @ 根据分类跳转 symbol，查找属性或函数，也可以 Ctrl+Shift+O 后输入:进入
+    # 根据名字查找 symbol，也可以 Ctrl+T
+
+    
+Ctrl + Shift + P，F1 	显示命令面板 Show Command Palette
+Ctrl + P 	快速打开 Quick Open
+Ctrl + Shift + N 	新窗口/实例 New window/instance
+Ctrl + Shift + W 	关闭窗口/实例 Close window/instance
+
+Ctrl+K Ctrl+C 	添加行注释 Add line comment
+Ctrl+K Ctrl+U 	删除行注释 Remove line comment
+Ctrl+/ 	切换行注释 Toggle line comment
+Shift+Alt+A 	切换块注释 Toggle block comment
+
+Ctrl+\ 	拆分编辑器 Split editor
+Ctrl+ 1 / 2 / 3 	聚焦到第1，第2或第3编辑器组 Focus into 1st, 2nd or 3rd editor group
+Ctrl+K Ctrl+ ←/→ 	聚焦到上一个/下一个编辑器组 Focus into previous/next editor group
+Ctrl+Shift+PgUp / PgDown 	向左/向右移动编辑器 Move editor left/right
+Ctrl+K ← / → 	移动活动编辑器组 Move active editor group
+
+Ctrl+` 	显示集成终端 Show integrated terminal
+Ctrl+Shift+` 	创建新终端 Create new terminal

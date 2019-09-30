@@ -5,18 +5,40 @@
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET PREFIX=%USERPROFILE%\.bin
 SET MAKELIST=%~dp0make.list
-SET DST=%~dp0bin
+SET BIN=%~dp0bin
 
-REM gen makelist and copy files
+REM gen makelist
 ECHO ; list of files under %PREFIX% > "%MAKELIST%"
 ECHO ; used by make.bat >> "%MAKELIST%"
 ECHO. >> "%MAKELIST%"
-DIR /A:-D /B /O:NE %PREFIX% >> "%MAKELIST%"
-IF NOT EXIST "%DST%" MKDIR "%DST%"
-FOR /F %%f IN (make.list) DO XCOPY /Y /D /H "%PREFIX%\%%f" "%DST%"
 
-REM folder special cases...
-IF NOT EXIST "%DST%\Templates" MKDIR "%DST%\Templates"
-XCOPY /Y /D /H "%PREFIX%\Templates" "%DST%\Templates"
-IF NOT EXIST "%DST%\Apps" MKDIR "%DST%\Apps"
-ECHO. > %DST%\Apps\.keep
+REM list up all files under %PREFIX%
+DIR /A:-D /B /O:NE %PREFIX% >> "%MAKELIST%"
+ECHO ^>^> Generating make.list
+ECHO.
+
+REM checkpoint
+ECHO ^>^> Now please check items in:
+ECHO ^>^>   %MAKELIST%
+ECHO ^>^> before copy, you can make changes to it
+ECHO ^>^> save it and press [Enter] to continue...
+ECHO.
+PAUSE
+
+REM %PREFIX%\bin
+SET DIR=%BIN%
+IF NOT EXIST "%DIR%" MKDIR "%DIR%"
+FOR /F %%f IN (make.list) DO XCOPY /Y /D /H "%PREFIX%\%%f" "%DIR%"
+
+REM %PREFIX%\bin\Templates
+SET DIR=%BIN%\Templates
+IF NOT EXIST "%DIR%" MKDIR "%DIR%"
+XCOPY /Y /D /H "%PREFIX%\Templates" "%DIR%"
+
+REM %PREFIX%\bin\App
+SET DIR=%BIN%\Apps
+IF NOT EXIST "%DIR%" MKDIR "%DIR%"
+ECHO. > %DIR%\.keep
+
+ECHO ^>^> Done.
+ECHO.

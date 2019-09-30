@@ -1,5 +1,6 @@
 @REM 2018-10-13
 @REM start/manage vbox winxp vm
+@ECHO OFF
 
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET VMMGR=%ProgramFiles%\Oracle\VirtualBox\VBoxManage.exe
