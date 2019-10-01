@@ -1,0 +1,12 @@
+ThemeFile=windows10
+Transparency=high
+OpaqueWhenFocused=no
+Font=Lucida Console
+FontHeight=9
+Locale=ja_JP
+Charset=UTF-8
+ClipShortcuts=no
+ScrollbackLines=4000
+Scrollbar=none
+PgUpDnScroll=yes
+Language=ja

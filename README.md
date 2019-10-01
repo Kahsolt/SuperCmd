@@ -27,7 +27,7 @@
   	- *.cmd	      自己写的cmd小脚本
   	- *.vbs	      自己写的vbs小脚本
   	- *.exe			  补充CUI程序/单文件小程序
-  	- *.lnk			  常用GUI程序的快捷方式/硬链接
+  	- *.lnk			  常用GUI程序的快捷方式
   	- *.txt       某些软件快捷键的备忘录或者笔记什么的
 
 ### my frequently used *.cmd and DOSKEY commands references

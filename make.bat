@@ -4,41 +4,46 @@
 
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET PREFIX=%USERPROFILE%\.bin
-SET MAKELIST=%~dp0make.list
-SET BIN=%~dp0bin
 
-REM gen makelist
-ECHO ; list of files under %PREFIX% > "%MAKELIST%"
-ECHO ; used by make.bat >> "%MAKELIST%"
-ECHO. >> "%MAKELIST%"
+:Migrate CmdPrompt
+SET BIN=%PREFIX%
+SET LOCAL_BIN=%~dp0\bin
+IF EXIST %BIN% (
+  IF NOT EXIST "%LOCAL_BIN%" MKDIR "%LOCAL_BIN%"
+  XCOPY /-Y /D /K "%BIN%\*.*" "%LOCAL_BIN%"
+)
+SET BIN_TEMPLATE=%BIN%\Templates
+IF EXIST "%BIN_TEMPLATE%" (
+  XCOPY /-Y /D /K /S "%BIN_TEMPLATE%\*.*" "%LOCAL_BIN%\Templates\"
+)
+SET LOCAL_BIN_APPS=%LOCAL_BIN%\Apps
+IF NOT EXIST "%LOCAL_BIN_APPS%" MKDIR "%LOCAL_BIN_APPS%"
+ECHO. > %LOCAL_BIN_APPS%\.keep
 
-REM list up all files under %PREFIX%
-DIR /A:-D /B /O:NE %PREFIX% >> "%MAKELIST%"
-ECHO ^>^> Generating make.list
-ECHO.
+:Migrate Powershell
+SET PSH_PROFILE=%USERPROFILE%\Documents\WindowsPowershell\Microsoft.PowerShell_profile.ps1
+SET LOCAL_PSH=%~dp0\psh
+IF EXIST %PSH_PROFILE% (
+  IF NOT EXIST "%LOCAL_PSH%" MKDIR "%LOCAL_PSH%"
+  XCOPY /-Y /D /K "%PSH_PROFILE%" "%LOCAL_PSH%"
+)
 
-REM checkpoint
-ECHO ^>^> Now please check items in:
-ECHO ^>^>   %MAKELIST%
-ECHO ^>^> before copy, you can make changes to it
-ECHO ^>^> save it and press [Enter] to continue...
-ECHO.
-PAUSE
-
-REM %PREFIX%\bin
-SET DIR=%BIN%
-IF NOT EXIST "%DIR%" MKDIR "%DIR%"
-FOR /F %%f IN (make.list) DO XCOPY /Y /D /H "%PREFIX%\%%f" "%DIR%"
-
-REM %PREFIX%\bin\Templates
-SET DIR=%BIN%\Templates
-IF NOT EXIST "%DIR%" MKDIR "%DIR%"
-XCOPY /Y /D /H "%PREFIX%\Templates" "%DIR%"
-
-REM %PREFIX%\bin\App
-SET DIR=%BIN%\Apps
-IF NOT EXIST "%DIR%" MKDIR "%DIR%"
-ECHO. > %DIR%\.keep
+:Migrate Msys2
+SET MSYS2_USER=%SystemDrive%\Msys64\home\%USERNAME%
+SET LOCAL_MSYS2_USER=%~dp0\msys2\home
+IF EXIST %MSYS2_USER% (
+  IF NOT EXIST "%LOCAL_MSYS2_USER%" MKDIR "%LOCAL_MSYS2_USER%"
+  XCOPY /-Y /D /K "%MSYS2_USER%\.bash*" "%LOCAL_MSYS2_USER%"
+  XCOPY /-Y /D /K "%MSYS2_USER%\.git*" "%LOCAL_MSYS2_USER%"
+  XCOPY /-Y /D /K "%MSYS2_USER%\.minttyrc" "%LOCAL_MSYS2_USER%"
+  XCOPY /-Y /D /K /S "%MSYS2_USER%\.ssh\*.*" "%LOCAL_MSYS2_USER%\.ssh\"
+)
+SET MSYS2_ETC=%SystemDrive%\Msys64\etc
+SET LOCAL_MSYS2_ETC=%~dp0\msys2\etc
+IF EXIST %MSYS2_ETC% (
+  IF NOT EXIST "%LOCAL_MSYS2_ETC%" MKDIR "%LOCAL_MSYS2_ETC%"
+  XCOPY /-Y /D /K "%MSYS2_ETC%\pacman.d\*.*" "%LOCAL_MSYS2_ETC%\pacman.d\"
+)
 
 ECHO ^>^> Done.
 ECHO.

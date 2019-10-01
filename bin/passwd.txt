@@ -1,0 +1,8 @@
+[Windows Live Account]
+user = kahsolt@qq.com
+       youlingquan@live.cn
+passwd = Alitheia1379
+
+[Bilibili - LiuHao]
+user = 512050931@qq.com
+passwd = liuhao18762

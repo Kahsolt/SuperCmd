@@ -1,6 +1,8 @@
 all:
 	
+
 test:
 	
+
 clean:
-	rm -rf .*log *.o
+	rm -rf *.o *.exe *.log

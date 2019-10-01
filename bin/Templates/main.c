@@ -15,8 +15,10 @@
 #define prti(x) printf("%d", x)
 #define prta(x, a, b) forr(i,a,b){if(i!=a)putchar(' ');prti(x[i]);}
 int cmp(const void* a,const void* b){return *((int*)a)-*((int*)b);}
-#define N 100000
+#define MAXN 100000
+#define MAXSTR 1000
 
+/*  */
 int main() {
   read(n);
   
